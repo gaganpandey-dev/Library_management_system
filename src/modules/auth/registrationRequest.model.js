@@ -48,12 +48,30 @@ name: {
       type: Boolean,
       default: false,
     },
+    approvedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+},
   status: {
       type: String,
       enum: ["PENDING", "APPROVED", "REJECTED"],
       default: "PENDING",
       index: true,
     },
+    approvedAt: {
+    type: Date
+},
+rejectedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+},
+rejectedAt: {
+    type: Date
+},
+rejectionReason: {
+    type: String,
+    trim: true
+},
 },
   {
     timestamps: true,
