@@ -48,9 +48,9 @@ name: {
       type: Boolean,
       default: false,
     },
-    approvedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+  approvedBy:{
+    type:String,
+    default:"SYSTEM"
 },
   status: {
       type: String,

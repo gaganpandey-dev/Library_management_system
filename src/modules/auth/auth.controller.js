@@ -1,18 +1,21 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
-import { ApiResponse } from "../../utils/apiResponse.js";
+import { ApiResponse } from "../../utils/ApiResponse.js";
 import { registerStudent } from "./auth.service.js";
 
 const register = asyncHandler(async (req, res) => {
-    const studentData = req.body;
 
-    const result =await registerStudent(studentData);
+    const result = await registerStudent(req.body);
 
     return res.status(201).json(
         new ApiResponse(
             201,
-            result ,
-            "Registration request submitted successfully "
+            result,
+            "Congratulations! Your registration has been approved."
         )
     );
+
 });
-export { register };
+
+export {
+    register
+};
