@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
 {
-
     student:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Student",
@@ -15,11 +15,17 @@ const userSchema = new mongoose.Schema(
         unique:true
     },
 
-   password:{
-    type:String,
-    default:null,
-    select:false
-},
+    password:{
+        type:String,
+        default:null,
+        select:false
+    },
+
+    refreshToken:{
+        type:String,
+        default:null,
+        select:false
+    },
 
     role:{
         type:String,
@@ -38,6 +44,40 @@ const userSchema = new mongoose.Schema(
     versionKey:false
 }
 );
+
+/*************************************************
+ * Model Methods
+ *************************************************/
+
+userSchema.methods.generateAccessToken = function () {
+
+    return jwt.sign(
+        {
+            id: this._id,
+            studentId: this.studentId,
+            role: this.role
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+        }
+    );
+
+};
+
+userSchema.methods.generateRefreshToken = function () {
+
+    return jwt.sign(
+        {
+            id: this._id
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        }
+    );
+
+};
 
 const User = mongoose.model("User",userSchema);
 

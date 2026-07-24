@@ -27,3 +27,32 @@ export const registerValidation = z.object({
         .trim()
 
 });
+
+ export const createPasswordValidation = z.object({
+
+    studentId: z
+        .string()
+        .trim()
+        .min(5),
+
+    password: z
+        .string()
+        .min(8)
+        .max(20)
+
+});
+ export const loginValidation = z.object({
+
+    studentId: z
+        .string()
+        .trim()
+        .min(5),
+
+    password: z
+        .string()
+        .min(8)
+        .max(20)
+
+});
+
+

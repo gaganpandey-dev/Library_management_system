@@ -1,6 +1,6 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
-import { registerStudent } from "./auth.service.js";
+import { registerStudent, createPassword } from "./auth.service.js";
 
 const register = asyncHandler(async (req, res) => {
 
@@ -15,7 +15,20 @@ const register = asyncHandler(async (req, res) => {
     );
 
 });
+const createPasswordController = asyncHandler(async (req, res) => {
+
+    const result = await createPassword(req.body);
+
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            result,
+            "Password created successfully."
+        )
+    );
+});
 
 export {
-    register
+    register,
+    createPasswordController
 };
