@@ -1,13 +1,16 @@
 import { Router } from "express";
 import {
     register,
-    createPasswordController
+    createPasswordController,
+    login
 } from "./auth.controller.js";
 import validate from "../../middlewares/validate.middleware.js";
 import { registerValidation ,
-    createPasswordValidation
+    createPasswordValidation,
+    loginValidation
 } from "./auth.validation.js";
 
+import verifyJWT from "../../middlewares/auth.middleware.js";
 const router = Router();
 
 router.post(
@@ -19,6 +22,15 @@ router.post(
     "/create-password",
     validate(createPasswordValidation),
     createPasswordController
+);
+router.post(
+
+    "/login",
+
+    validate(loginValidation),
+
+    login
+
 );
 
 

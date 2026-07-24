@@ -5,7 +5,7 @@ import delay from "../../utils/delay.js";
 import { ApiError } from "../../utils/ApiError.js";
 import generateStudentId from "../../utils/studentIdGenerator.js";
 import bcrypt from "bcrypt";
-import { generateAccessToken, generateRefreshToken } from "../../utils/jwt.js";
+
 
 // this function is use to created password by user to stode in the hashing form 
 const createPassword = async ({ studentId , password }) => {
@@ -204,21 +204,37 @@ const loginStudent = async ({ studentId, password }) => {
 
     }
 
-    const accessToken = generateAccessToken(user);
+  const accessToken = user.generateAccessToken();
 
-    const refreshToken = generateRefreshToken(user);
+const refreshToken = user.generateRefreshToken();
 
-    return {
+/**********************************************
+ * Save Refresh Token
+ **********************************************/
 
-        accessToken,
+user.refreshToken = refreshToken;
 
-        refreshToken,
+await user.save({
+
+    validateBeforeSave: false
+
+});
+
+return {
+
+    accessToken,
+
+    refreshToken,
+
+    user: {
 
         studentId: user.studentId,
 
         role: user.role
 
-    };
+    }
+
+};
 
 };
 
